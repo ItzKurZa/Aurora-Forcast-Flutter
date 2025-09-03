@@ -1,3 +1,154 @@
+# Aurora Forecast - AI Coding Agent Instructions
+
+## Project Overview
+
+Aurora Forecast is a Flutter app for displaying NASA solar images and managing aurora alerts. The project follows **Clean Architecture** with a feature-based structure, but currently has a simplified implementation without some advanced patterns described in the longer documentation below.
+
+### Current Architecture State
+
+**⚠️ Important**: The project is in development and only partially implements the full clean architecture patterns described in the detailed guidelines below. Key current realities:
+
+- **State Management**: Uses simplified Bloc/Cubit without the `DataState` utility mentioned in guidelines
+- **Dependencies**: Currently missing Dio/Retrofit setup - uses basic HTTP
+- **Service Locator**: Not implemented - uses direct instantiation
+- **Error Handling**: Uses basic `Result<T, E>` pattern, not the full error mapping described
+
+### Quick Development Guide
+
+1. **Adding Features**: Follow the feature-based structure: `lib/feature_name/{domain,infrastructure,application,presentation}/`
+2. **State Management**: Create `feature_cubit.dart` and `feature_state.dart` using Freezed
+3. **Models**: Use Freezed with `@Default()` values and `abstract class` syntax (current codebase style)
+4. **UI Constants**: Always use `KSizes` from `lib/core/constants/k_sizes.dart` - never hardcode measurements
+5. **Code Generation**: Run `dart run build_runner build` after adding Freezed models
+
+### Essential Commands
+
+```bash
+# Install dependencies and generate code
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs
+
+# Run app
+flutter run
+
+# Clean build (if issues)
+flutter clean && flutter pub get
+```
+
+### Current Dependencies (pubspec.yaml)
+
+- `freezed_annotation: ^3.1.0` + `freezed: ^3.2.0` (code generation)
+- `result_type: ^1.0.0` (error handling)
+- `flutter_bloc: ^9.1.1` (state management)
+- `http: ^1.5.0` (networking - to be upgraded to Dio+Retrofit)
+
+### Project-Specific Patterns
+
+1. **State Classes**: Use simple state structure vs complex DataState wrapper:
+
+   ```dart
+   @freezed
+   abstract class FeatureState with _$FeatureState {
+     const factory FeatureState({
+       @Default([]) List<Model> items,
+       @Default(false) bool isLoading,
+       @Default(false) bool hasError,
+     }) = _FeatureState;
+   }
+   ```
+
+2. **Service Constructor Pattern**: Direct instantiation fallback:
+
+   ```dart
+   FeatureCubit({IFeatureService? service})
+     : _service = service ?? FeatureService(),
+       super(FeatureState.initial());
+   ```
+
+3. **KSizes Usage**: Mandatory for all UI measurements:
+   ```dart
+   padding: EdgeInsets.all(KSizes.margin4x),  // ✅ Correct
+   padding: EdgeInsets.all(16.0),             // ❌ Never do this
+   ```
+
+### HTTP to Dio+Retrofit Migration Path
+
+**Current State**: Project uses static URL generation without actual HTTP calls. Services like `SunService` directly create model lists from static API keys.
+
+**Migration Steps**:
+
+1. **Add Dependencies** (already in pubspec.yaml):
+
+   ```yaml
+   dependencies:
+     dio: ^5.9.0
+     retrofit: ^4.7.2
+     retrofit_generator: ^10.0.2
+   dev_dependencies:
+     build_runner: ^2.4.9
+   ```
+
+2. **Create Core HTTP Infrastructure**:
+
+   ```dart
+   // lib/core/api/http_client.dart
+   class HttpClient {
+     static Dio createDio({required String baseUrl}) {
+       final dio = Dio();
+       dio.options.baseUrl = baseUrl;
+       dio.options.connectTimeout = const Duration(seconds: 30);
+       dio.options.receiveTimeout = const Duration(seconds: 30);
+       return dio;
+     }
+   }
+   ```
+
+3. **Create Retrofit API Clients**:
+
+   ```dart
+   // lib/feature/infrastructure/api/feature_api_client.dart
+   @RestApi()
+   abstract class FeatureApiClient {
+     factory FeatureApiClient(Dio dio, {String baseUrl}) = _FeatureApiClient;
+
+     @GET('/endpoint')
+     Future<List<FeatureDto>> getItems();
+   }
+   ```
+
+4. **Update Service Implementation**:
+
+   ```dart
+   class FeatureService extends BaseApiService implements IFeatureService {
+     final FeatureApiClient _apiClient;
+
+     FeatureService({Dio? dio})
+       : _apiClient = FeatureApiClient(
+           dio ?? HttpClient.createDio(baseUrl: FeatureApiKeys.baseUrl),
+         ),
+         super(dio ?? HttpClient.createDio(baseUrl: FeatureApiKeys.baseUrl));
+
+     @override
+     Future<Result<List<FeatureModel>, FeatureError>> getItems() async {
+       try {
+         final dtos = await _apiClient.getItems();
+         return Success(dtos.map((dto) => dto.toDomain()).toList());
+       } on DioException catch (e) {
+         return Failure(_mapDioError(e));
+       }
+     }
+   }
+   ```
+
+5. **Generate Retrofit Code**:
+   ```bash
+   dart run build_runner build --delete-conflicting-outputs
+   ```
+
+**Current Example**: See `lib/sun/infrastructure/sun_service.dart` which uses static URL generation. When migrating to real API calls, replace the static list generation with actual HTTP requests using the Retrofit client pattern.
+
+---
+
 # Flutter Project Structure and Naming Conventions
 
 ## Directory Structure

@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:aurora_forecast/core/constants/k_sizes.dart';
+import '../application/alert_cubit.dart';
 import 'widgets/alerts_toggle_widget.dart';
+import 'widgets/notification_list_widget.dart';
 
 class AlertsPage extends StatelessWidget {
   const AlertsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AlertCubit()..initialize(),
+      child: const AlertsView(),
+    );
+  }
+}
+
+class AlertsView extends StatelessWidget {
+  const AlertsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +38,7 @@ class AlertsPage extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 40,
+                    fontSize: KSizes.fontSizeXXL,
                   ),
                 ),
                 Spacer(),
@@ -31,7 +46,7 @@ class AlertsPage extends StatelessWidget {
                   icon: const Icon(
                     Icons.settings,
                     color: Colors.white,
-                    size: 40,
+                    size: KSizes.iconXL,
                   ),
                   onPressed: () {},
                   padding: EdgeInsets.zero,
@@ -54,12 +69,14 @@ class AlertsPage extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white54,
                 fontWeight: FontWeight.bold,
-                fontSize: 18,
+                fontSize: KSizes.fontSizeM,
                 letterSpacing: 1.2,
               ),
             ),
             const SizedBox(height: KSizes.margin4x),
             const AlertsToggleWidget(),
+            const SizedBox(height: KSizes.margin4x * 2),
+            const Expanded(child: NotificationListWidget()),
           ],
         ),
       ),

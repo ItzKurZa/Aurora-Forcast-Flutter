@@ -39,7 +39,7 @@ class SunView extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 40,
+                    fontSize: KSizes.fontSizeXXL,
                   ),
                 ),
                 Spacer(),
@@ -47,7 +47,7 @@ class SunView extends StatelessWidget {
                   icon: const Icon(
                     Icons.settings,
                     color: Colors.white,
-                    size: 40,
+                    size: KSizes.iconXL,
                   ),
                   onPressed: () {},
                   padding: EdgeInsets.zero,
@@ -98,11 +98,10 @@ class SunView extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder:
-                            (_) => SunImageViewerWidget(
-                              images: state.images,
-                              initialIndex: index,
-                            ),
+                        builder: (_) => SunImageViewerWidget(
+                          images: state.images,
+                          initialIndex: index,
+                        ),
                       ),
                     );
                   },

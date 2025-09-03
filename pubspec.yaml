@@ -38,7 +38,10 @@ dependencies:
   result_type: ^1.0.0
   flutter_bloc: ^9.1.1
   json_annotation: ^4.9.0
-  http: ^1.5.0
+  dio: ^5.9.0
+  retrofit: ^4.7.2
+  get_it: ^8.2.0
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +55,8 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   freezed: ^3.2.0
   json_serializable: ^6.10.0
+  build_runner: ^2.4.9
+  retrofit_generator: ^10.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

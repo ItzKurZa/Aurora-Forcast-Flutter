@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aurora_forecast/core/constants/k_sizes.dart';
 import '../../domain/sun_model.dart';
 
 class SunImageViewerWidget extends StatefulWidget {
@@ -44,12 +45,15 @@ class _SunImageViewerWidgetState extends State<SunImageViewerWidget> {
             child: AppBar(
               backgroundColor: Colors.black,
               elevation: 0,
-              iconTheme: const IconThemeData(color: Colors.white, size: 38),
+              iconTheme: const IconThemeData(
+                color: Colors.white,
+                size: KSizes.iconL,
+              ),
               title: const Text(
                 'Sun',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 32,
+                  fontSize: KSizes.fontSizeXL,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -63,8 +67,8 @@ class _SunImageViewerWidgetState extends State<SunImageViewerWidget> {
                   child: PageView.builder(
                     controller: _pageController,
                     itemCount: widget.images.length,
-                    onPageChanged:
-                        (index) => setState(() => _currentIndex = index),
+                    onPageChanged: (index) =>
+                        setState(() => _currentIndex = index),
                     itemBuilder: (context, index) {
                       final image = widget.images[index];
                       return InteractiveViewer(
@@ -80,11 +84,11 @@ class _SunImageViewerWidgetState extends State<SunImageViewerWidget> {
                                 child: CircularProgressIndicator(),
                               );
                             },
-                            errorBuilder:
-                                (context, error, stackTrace) => const Icon(
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(
                                   Icons.broken_image,
                                   color: Colors.white24,
-                                  size: 80,
+                                  size: KSizes.iconXXL,
                                 ),
                           ),
                         ),
@@ -97,7 +101,7 @@ class _SunImageViewerWidgetState extends State<SunImageViewerWidget> {
                   widget.images[_currentIndex].label,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: KSizes.fontSizeL,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
