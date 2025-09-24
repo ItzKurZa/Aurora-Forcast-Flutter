@@ -1,5 +1,7 @@
 import 'package:aurora_forecast/alerts/presentation/alerts_page.dart';
 import 'package:aurora_forecast/sun/presentation/sun_page.dart';
+import 'package:aurora_forecast/map/presentation/map_page.dart';
+import 'package:aurora_forecast/core/constants/k_sizes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,31 +11,144 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Aurora Forecast',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.dark,
+        ),
+        scaffoldBackgroundColor: Colors.black,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.black,
+          selectedItemColor: Colors.deepPurple,
+          unselectedItemColor: Colors.grey,
+          type: BottomNavigationBarType.fixed,
+        ),
       ),
       debugShowCheckedModeBanner: false,
-      home: const SunPage(),
+      home: const MainNavigationPage(),
+    );
+  }
+}
+
+class MainNavigationPage extends StatefulWidget {
+  const MainNavigationPage({super.key});
+
+  @override
+  State<MainNavigationPage> createState() => _MainNavigationPageState();
+}
+
+class _MainNavigationPageState extends State<MainNavigationPage> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    const SunPage(),
+    const AlertsPage(),
+    const MapPage(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_currentIndex],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          border: Border(
+            top: BorderSide(
+              color: Colors.deepPurple.withValues(alpha: 0.3),
+              width: 1.0,
+            ),
+          ),
+        ),
+        child: SafeArea(
+          child: IntrinsicHeight(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: KSizes.margin4x,
+                vertical: KSizes.margin2x,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(
+                    icon: Icons.wb_sunny_outlined,
+                    selectedIcon: Icons.wb_sunny,
+                    label: 'Sun',
+                    index: 0,
+                  ),
+                  _buildNavItem(
+                    icon: Icons.notification_important_outlined,
+                    selectedIcon: Icons.notification_important,
+                    label: 'Alerts',
+                    index: 1,
+                  ),
+                  _buildNavItem(
+                    icon: Icons.map_outlined,
+                    selectedIcon: Icons.map,
+                    label: 'Map',
+                    index: 2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem({
+    required IconData icon,
+    required IconData selectedIcon,
+    required String label,
+    required int index,
+  }) {
+    final bool isSelected = _currentIndex == index;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: isSelected ? KSizes.margin8x : KSizes.margin2x,
+          vertical: KSizes.margin1x,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(KSizes.radiusDefault),
+          color: isSelected
+              ? Colors.deepPurple.withValues(alpha: 0.2)
+              : Colors.transparent,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              isSelected ? selectedIcon : icon,
+              color: isSelected ? Colors.deepPurple : Colors.grey,
+              size: KSizes.iconM,
+            ),
+            SizedBox(height: KSizes.margin1x / 2),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? Colors.deepPurple : Colors.grey,
+                fontSize: KSizes.fontSizeS - 2,
+                fontWeight: isSelected
+                    ? KSizes.fontWeightBold
+                    : KSizes.fontWeightNormal,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

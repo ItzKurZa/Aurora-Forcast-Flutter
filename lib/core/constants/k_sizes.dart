@@ -6,6 +6,7 @@ abstract class KSizes {
   static const double margin1x = 4.0;
   static const double margin2x = 8.0;
   static const double margin4x = 16.0;
+  static const double margin8x = 32.0;
 
   // Border radius
   static const double radiusDefault = 12.0;

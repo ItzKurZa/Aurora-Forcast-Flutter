@@ -31,14 +31,6 @@ class ExampleUsage {
   bool needsProxy() {
     return _corsProxy.shouldUseProxy;
   }
-
-  /// Example 6: Get proxy information for debugging
-  void debugProxyInfo() {
-    print('Available proxies: ${_corsProxy.availableProxies.length}');
-    for (final proxy in _corsProxy.availableProxies) {
-      print('  - ${proxy.name}: ${proxy.description}');
-    }
-  }
 }
 
 /// Example widget showing how to use CorsProxyService with Image.network

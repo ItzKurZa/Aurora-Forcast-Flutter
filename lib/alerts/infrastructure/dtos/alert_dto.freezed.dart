@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AlertDto {
 
- String get id; String get title; String get message;@JsonKey(name: 'is_enabled') bool get isEnabled; String get type;@JsonKey(name: 'nasa_url') String get nasaUrl; String? get timestamp; String get status;
+ String get id; String get title; String get message; bool get isEnabled; String get type; String get nasaUrl; String? get timestamp; String get status;
 /// Create a copy of AlertDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $AlertDtoCopyWith<$Res>  {
   factory $AlertDtoCopyWith(AlertDto value, $Res Function(AlertDto) _then) = _$AlertDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String message,@JsonKey(name: 'is_enabled') bool isEnabled, String type,@JsonKey(name: 'nasa_url') String nasaUrl, String? timestamp, String status
+ String id, String title, String message, bool isEnabled, String type, String nasaUrl, String? timestamp, String status
 });
 
 
@@ -160,7 +160,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String message, @JsonKey(name: 'is_enabled')  bool isEnabled,  String type, @JsonKey(name: 'nasa_url')  String nasaUrl,  String? timestamp,  String status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String message,  bool isEnabled,  String type,  String nasaUrl,  String? timestamp,  String status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AlertDto() when $default != null:
 return $default(_that.id,_that.title,_that.message,_that.isEnabled,_that.type,_that.nasaUrl,_that.timestamp,_that.status);case _:
@@ -181,7 +181,7 @@ return $default(_that.id,_that.title,_that.message,_that.isEnabled,_that.type,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String message, @JsonKey(name: 'is_enabled')  bool isEnabled,  String type, @JsonKey(name: 'nasa_url')  String nasaUrl,  String? timestamp,  String status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String message,  bool isEnabled,  String type,  String nasaUrl,  String? timestamp,  String status)  $default,) {final _that = this;
 switch (_that) {
 case _AlertDto():
 return $default(_that.id,_that.title,_that.message,_that.isEnabled,_that.type,_that.nasaUrl,_that.timestamp,_that.status);case _:
@@ -201,7 +201,7 @@ return $default(_that.id,_that.title,_that.message,_that.isEnabled,_that.type,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String message, @JsonKey(name: 'is_enabled')  bool isEnabled,  String type, @JsonKey(name: 'nasa_url')  String nasaUrl,  String? timestamp,  String status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String message,  bool isEnabled,  String type,  String nasaUrl,  String? timestamp,  String status)?  $default,) {final _that = this;
 switch (_that) {
 case _AlertDto() when $default != null:
 return $default(_that.id,_that.title,_that.message,_that.isEnabled,_that.type,_that.nasaUrl,_that.timestamp,_that.status);case _:
@@ -216,15 +216,15 @@ return $default(_that.id,_that.title,_that.message,_that.isEnabled,_that.type,_t
 @JsonSerializable()
 
 class _AlertDto implements AlertDto {
-  const _AlertDto({this.id = '', this.title = '', this.message = '', @JsonKey(name: 'is_enabled') this.isEnabled = false, this.type = 'aurora', @JsonKey(name: 'nasa_url') this.nasaUrl = '', this.timestamp, this.status = 'unread'});
+  const _AlertDto({this.id = '', this.title = '', this.message = '', this.isEnabled = false, this.type = 'aurora', this.nasaUrl = '', this.timestamp, this.status = 'unread'});
   factory _AlertDto.fromJson(Map<String, dynamic> json) => _$AlertDtoFromJson(json);
 
 @override@JsonKey() final  String id;
 @override@JsonKey() final  String title;
 @override@JsonKey() final  String message;
-@override@JsonKey(name: 'is_enabled') final  bool isEnabled;
+@override@JsonKey() final  bool isEnabled;
 @override@JsonKey() final  String type;
-@override@JsonKey(name: 'nasa_url') final  String nasaUrl;
+@override@JsonKey() final  String nasaUrl;
 @override final  String? timestamp;
 @override@JsonKey() final  String status;
 
@@ -261,7 +261,7 @@ abstract mixin class _$AlertDtoCopyWith<$Res> implements $AlertDtoCopyWith<$Res>
   factory _$AlertDtoCopyWith(_AlertDto value, $Res Function(_AlertDto) _then) = __$AlertDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String message,@JsonKey(name: 'is_enabled') bool isEnabled, String type,@JsonKey(name: 'nasa_url') String nasaUrl, String? timestamp, String status
+ String id, String title, String message, bool isEnabled, String type, String nasaUrl, String? timestamp, String status
 });
 
 

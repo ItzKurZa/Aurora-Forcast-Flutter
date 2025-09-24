@@ -10,9 +10,9 @@ abstract class AlertDto with _$AlertDto {
     @Default('') String id,
     @Default('') String title,
     @Default('') String message,
-    @Default(false) @JsonKey(name: 'is_enabled') bool isEnabled,
+    @Default(false) bool isEnabled,
     @Default('aurora') String type,
-    @Default('') @JsonKey(name: 'nasa_url') String nasaUrl,
+    @Default('') String nasaUrl,
     String? timestamp,
     @Default('unread') String status,
   }) = _AlertDto;
