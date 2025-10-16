@@ -1,4 +1,6 @@
 import 'package:aurora_forecast/alerts/presentation/alerts_page.dart';
+import 'package:aurora_forecast/features/activity/presentation/pages/auroral_activity_page.dart';
+import 'package:aurora_forecast/features/forecast/presentation/pages/forecast_page.dart';
 import 'package:aurora_forecast/sun/presentation/sun_page.dart';
 import 'package:aurora_forecast/map/presentation/map_page.dart';
 import 'package:aurora_forecast/core/constants/k_sizes.dart';
@@ -45,6 +47,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
+    const AuroraForecastPage(),
+    const AuroralActivityPage(),
     const SunPage(),
     const AlertsPage(),
     const MapPage(),
@@ -75,22 +79,34 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _buildNavItem(
+                    icon: Icons.thunderstorm_outlined,
+                    selectedIcon: Icons.thunderstorm,
+                    label: 'Forecast',
+                    index: 0,
+                  ),
+                  _buildNavItem(
+                    icon: Icons.storm_outlined,
+                    selectedIcon: Icons.storm,
+                    label: 'Activity',
+                    index: 1,
+                  ),
+                  _buildNavItem(
                     icon: Icons.wb_sunny_outlined,
                     selectedIcon: Icons.wb_sunny,
                     label: 'Sun',
-                    index: 0,
+                    index: 2,
                   ),
                   _buildNavItem(
                     icon: Icons.notification_important_outlined,
                     selectedIcon: Icons.notification_important,
                     label: 'Alerts',
-                    index: 1,
+                    index: 3,
                   ),
                   _buildNavItem(
                     icon: Icons.map_outlined,
                     selectedIcon: Icons.map,
                     label: 'Map',
-                    index: 2,
+                    index: 4,
                   ),
                 ],
               ),
