@@ -19,8 +19,8 @@ class _MapWidgetState extends State<MapWidget> {
 
   // Default to Aurora viewing locations (northern latitudes)
   static const LatLng _initialCenter = LatLng(
-    64.2008,
-    -149.4937,
+    16.0545,
+    108.0717,
   ); // Fairbanks, Alaska
   static const double _initialZoom = 4.0;
 
